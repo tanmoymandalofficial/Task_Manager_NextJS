@@ -4,8 +4,9 @@ import { useTodos } from "@/store/Todos";
 import { FormEvent, useState } from "react"
 import AllTasks from "./AllTasks";
 import Navbar from "./Navbar";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 const AddTodo = () => {
@@ -13,6 +14,8 @@ const AddTodo = () => {
     const [description, setdescription] = useState("");
 
     const { handleAddTask } = useTodos();
+
+    const router = useRouter()
 
 
     const handleFormSubmit = (e:FormEvent<HTMLFormElement>)=>{
@@ -22,7 +25,8 @@ const AddTodo = () => {
         // console.log(handleAddTask);
         setTask("");
         setdescription("");
-        alert("One task is added"); 
+        // alert("One task is added");
+        router.push('/')
     }
 
 
@@ -31,8 +35,8 @@ const AddTodo = () => {
         <input type="text" placeholder="Write your task Title" value={task} onChange={event => setTask(event.target.value)}/>
         <input type="text" placeholder="Write your task " value={description} onChange={event => setdescription(event.target.value)}/>
         <button type="submit" >Add Task</button>
-        <Navbar/>
-        <AllTasks/>
+        {/* <Navbar/> */}
+        {/* <AllTasks/> */}
         
     </form>
   )

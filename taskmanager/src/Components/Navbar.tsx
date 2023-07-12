@@ -13,8 +13,9 @@ const Navbar = () => {
 
   return (
     <nav>
-        <Link href='/'> Add Task</Link>
-        <Link href='/?task=Todo'> To Do</Link>
+        <h1>Task Manager</h1>
+        <Link href='/?task=new'> Add Task</Link>
+        <Link href='/'> To Do</Link>
         <Link href='/?task=progress'> In Progress</Link>
         <Link href='/?task=completed'> Completed</Link>
     </nav>

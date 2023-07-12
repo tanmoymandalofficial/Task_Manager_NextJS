@@ -20,13 +20,22 @@ export type TodosContext = {
     handleAddTask : (task:string, description:string)=> void;
     handleChangeStatus : (valaue:string, id:string) => void;
     handleDelete: (id:string)=> void;
+    viewEdit: task;
+    handleView: (task:{})=> void;
+    handleEdit: (task:{})=> void;
+    markImportent: ()=>void;
 }
 
 export const todosContext = createContext<TodosContext | null>(null);
 
 export const TodosProvider = ({children}:{children:ReactNode}) =>{
 
-    const [tasks, setTasks] = useState<task[]>([])
+    let myTask = JSON.parse(localStorage.getItem("myTasks")) || [];
+    console.log(myTask);
+    // console.log(localStorage.getItem("myTasks"))
+
+    const [tasks, setTasks] = useState<task[]>(myTask)
+    const [viewEdit, setViewEdit] = useState({})
 
 
 //    Handle add task mathod from front end
@@ -81,14 +90,43 @@ const handleDelete = (id:string)=>{
 
 }
 
+// Handle View funtion
+const handleView = (task:{})=>{
+    setViewEdit(task);
+    console.log(viewEdit);
+}
 
+// Handle edit component
+const handleEdit = (editTask:{})=>{
+    // console.log(task);
+    setTasks((prev)=>{
+        const newTasks = prev.filter((task)=> task.id !== editTask.id)
+        return [...newTasks,editTask];
+    })
+    
+    console.log(tasks);
+}
+
+// mark the task importent funtion
+const markImportent = (id)=>{
+    console.log("got the importent request"+ id);
+    setTasks((prev)=>{
+        const newTasks = prev.map((task)=>{
+            if(task.id===id){
+                return {...task, importent : !task.importent}
+            }
+            return task;
+        })
+        return newTasks;
+    })
+}
 
 
 
 
 
    return (
-    <todosContext.Provider value={{tasks, handleAddTask, handleChangeStatus, handleDelete}}>
+    <todosContext.Provider value={{tasks, handleAddTask, handleChangeStatus, handleDelete, viewEdit, handleView, handleEdit, markImportent}}>
         {children}
     </todosContext.Provider>
    )
