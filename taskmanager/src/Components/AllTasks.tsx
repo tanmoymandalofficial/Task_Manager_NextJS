@@ -40,25 +40,32 @@ const AllTasks = () => {
 
 
   return (
-    <div>
+    <div className=" container w-7/12 m-auto " >
         <ol>
+            <li className=" flex justify-between pl-2 border-t pt-4 pr-2 m-1 mb-4 shadow-sm font-semibold pb-4 border-b-2 text-zinc-600">
+                <p className=" w-60">Title</p>
+                {quiryParam !== 'completed'?<p>Mark Importent</p>:""}
+                <p>Status</p>
+                <p>Fution Buttons</p>
+            </li>
             {
                 filterTodos.map((todo)=>{
                     return (
-                    <li key={todo.id}>
-                        {todo.task} 
-                        <span>
-                            {todo.status !== 'Done'?<label htmlFor={todo.id}>Importent</label>:""}
-                            {todo.status !== 'Done'? <input type="checkbox" id={todo.id} checked={todo.importent} onChange={()=>markImportent(todo.id) }/>:""}
+                    <li key={todo.id} className={todo.importent===true?" flex  justify-between pl-2 pr-2 m-1 shadow-sm bg-yellow-100":" flex  justify-between pl-2 pr-2 m-1 shadow-sm"}>
+                        <button className=" pt-3  w-80  pb-2  font-medium text-left" onClick={()=> handleViewon(todo)}>{todo.task}</button>
+                        <span className=" pt-3">
+                            {todo.status !== 'Done'?<label htmlFor={todo.id} className=" pr-2">Importent</label>:""}
+                            {todo.status !== 'Done'? <input className="rounded text-pink-500" type="checkbox" id={todo.id} checked={todo.importent} onChange={()=>markImportent(todo.id) }/>:""}
                         </span>
-                        <select name="" id="" onChange={(e)=>{handleChangeStatus(e.target.value, todo.id)}}>
+                        <select className="px-3 py-0 rounded-full bg-orange-100 font-bold text-sm   " disabled={quiryParam === 'completed'} onChange={(e)=>{handleChangeStatus(e.target.value, todo.id)}}>
                             <option value="ToDo" selected={quiryParam === null}>ToDo</option>
                             <option value="Progress" selected={quiryParam === 'progress'}>Progress</option>
                             <option value="Done" selected={quiryParam === 'completed'}>Done</option>
                         </select>
-                        <button type="button" onClick={()=> handleViewon(todo)}>View</button>
-                        <button type="button" disabled={todo.status === 'Done'} onClick={()=> handleEdit(todo)}>Edit</button>
-                        <button type="button" onClick={()=> handleDelete(todo.id)}>Delete</button>
+                        {/* <button type="button" className=" text-sm font-bold text-green-500" onClick={()=> handleViewon(todo)}>View</button> */}
+                        {todo.status !== 'Done'?<button type="button" className=" text-sm font-bold text-orange-500" disabled={todo.status === 'Done'} onClick={()=> handleEdit(todo)}>Edit</button> :""}
+                        
+                        <button type="button" className=" text-sm font-bold text-amber-700" onClick={()=> handleDelete(todo.id)}>Delete</button>
                         
                     </li>
                     

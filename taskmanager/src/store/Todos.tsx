@@ -11,7 +11,7 @@ export type task = {
     description:string;
     status: string;
     importent: boolean;
-    createdAt: Date;
+    createdAt: string;
 }
 
 // Type of the Context the we sent fro store 
@@ -49,7 +49,7 @@ export const TodosProvider = ({children}:{children:ReactNode}) =>{
                 description,
                 status: "ToDo",
                 importent: false,
-                createdAt: new Date()
+                createdAt: new Date().toString()
             },
                 ...prev
         
